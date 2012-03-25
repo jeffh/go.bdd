@@ -136,8 +136,8 @@ func ToPanicWith(actual interface{}, expected interface{}) (string, bool) {
   return "", true
 }
 
-func ToNotPanic(actual interface{}) (string, bool) {
-  actual = rescueException(actual.(func()))
+func ToNotPanic(f func()) (string, bool) {
+  actual := rescueException(f)
 
   if actual != nil {
     return fmt.Sprintf("expected no panic,\n          but got: %v\n", actual), false
