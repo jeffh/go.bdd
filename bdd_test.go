@@ -41,6 +41,42 @@ func TestIt(t *testing.T) {
   assertEqualObjects(t, i, 1)
 }
 
+func TestAfterEach(t *testing.T) {
+  Describe("foo", func() {
+    i := 0
+
+    AfterEach(func() {
+      i++
+    })
+
+    It("will run", func() {
+      assertEqualObjects(t, i, 0)
+    })
+
+    It("will run here too", func() {
+      assertEqualObjects(t, i, 1)
+    })
+
+    Describe("bar", func() {
+      j := 0
+
+      AfterEach(func() {
+        j++
+      })
+
+      It("will run", func() {
+        assertEqualObjects(t, j, 0)
+        assertEqualObjects(t, i, 2)
+      })
+
+      It("will run here too", func() {
+        assertEqualObjects(t, j, 1)
+        assertEqualObjects(t, i, 3)
+      })
+    })
+  })
+}
+
 func TestBeforeEach(t *testing.T) {
   Describe("foo", func() {
     i := 0
@@ -91,7 +127,7 @@ func TestEqualAssertion(t *testing.T) {
   assertEqualObjects(t, testingErrors[0].String, "expected: 23\n     got: 24\n")
   assertDeepEqualObjects(t, testingErrors[0].Contexts, []string{"foo", "bar"})
   fmt.Println(testingErrors[0].ErrorLine)
-  assertEqualObjects(t, strings.HasSuffix(testingErrors[0].ErrorLine, "bdd_test.go:83"), true)
+  assertEqualObjects(t, strings.HasSuffix(testingErrors[0].ErrorLine, "bdd_test.go:119"), true)
 
   testingErrors = testingErrors[0:0] // cleanup.. bleh
 }
