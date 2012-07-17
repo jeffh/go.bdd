@@ -195,6 +195,14 @@ func init() {
         Expect(true, ToNotBeNil)
       })
 
+      It("matches for true", func() {
+          Expect(true, ToBeTrue)
+      })
+
+      It("matches for false", func() {
+          Expect(false, ToBeFalse)
+      })
+
     })
 
     Describe("deep equals matcher", func() {

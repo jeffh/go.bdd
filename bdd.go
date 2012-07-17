@@ -113,6 +113,28 @@ func ToBeNil(actual interface{}) (string, bool) {
   return "", true
 }
 
+func ToBeTrue(actual interface{}) (string, bool) {
+    a, ok := actual.(bool)
+    if !ok {
+        return fmt.Sprint("expected to be bool,\n            but got: %#v", actual), false
+    }
+    if !a {
+        return "expected to be true,\n            but got: false", false
+    }
+    return "", true
+}
+
+func ToBeFalse(actual interface{}) (string, bool) {
+    a, ok := actual.(bool)
+    if !ok {
+        return fmt.Sprint("expected to be bool,\n            but got: %#v", actual), false
+    }
+    if a {
+        return "expected to be false,\n            but got: true", false
+    }
+    return "", true
+}
+
 func ToNotBeNil(actual interface{}) (string, bool) {
   if reflect.DeepEqual(reflect.ValueOf(nil), reflect.Indirect(reflect.ValueOf(actual))) {
     return "expected to not be nil,\n               but got: nil\n", false
